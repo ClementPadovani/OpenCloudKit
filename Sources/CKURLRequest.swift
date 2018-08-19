@@ -83,6 +83,9 @@ class CKURLRequest: NSObject {
                     // Sign Request 
                     if let signedRequest  = CKServerRequestAuth.authenicateServer(forRequest: urlRequest, withServerToServerKeyAuth: serverAccount.serverToServerAuth) {
                         urlRequest = signedRequest
+                        CloudKit.debugPrint("got signed request: \(signedRequest)")
+                    } else {
+                        CloudKit.debugPrint("failed to get signed request")
                     }
                 }
             
