@@ -35,6 +35,8 @@ struct CKServerRequestAuth {
         
         self.requestDate = CKServerRequestAuth.ISO8601DateFormatter.string(from: Date())
         
+        print("auth request, date: \(requestDate) subpath: \(urlPath) base64 body: \(requestBody.base64EncodedString(options: []))")
+        
         if let signature = CKServerRequestAuth.signature(requestDate: requestDate,requestBody: requestBody, urlSubpath: urlPath, privateKeyPath: privateKeyPath) {
             
             self.signature = signature
@@ -99,6 +101,8 @@ struct CKServerRequestAuth {
             return nil
         }
         
+        print("headers: \(CKRequestKeyIDHeaderKey) = \(serverKeyID) \(CKRequestDateHeaderKey) = \(auth.requestDate) \(CKRequestSignatureHeaderKey) = \(auth.signature)")
+
         request.setValue(serverKeyID, forHTTPHeaderField: CKRequestKeyIDHeaderKey)
         request.setValue(auth.requestDate, forHTTPHeaderField: CKRequestDateHeaderKey)
         request.setValue(auth.signature, forHTTPHeaderField: CKRequestSignatureHeaderKey)
