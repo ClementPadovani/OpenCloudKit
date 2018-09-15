@@ -83,6 +83,8 @@ struct CKServerRequestAuth {
         
         let rawPayloadString = rawPayload(withRequestDate: requestDate, requestBody: requestBody, urlSubpath: urlSubpath)
       
+        print("base64: \(rawPayloadString.data(using: .utf8)!.base64EncodedString())")
+
         let requestData = rawPayloadString.data(using: String.Encoding.utf8)!
        
         
