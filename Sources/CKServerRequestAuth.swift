@@ -8,6 +8,7 @@
 
 import Foundation
 import CryptoSwift
+import CryptorRSA
 
 struct CKServerRequestAuth {
     
@@ -47,29 +48,39 @@ struct CKServerRequestAuth {
     }
     
     static func sign(data: NSData, privateKeyPath: String) -> NSData? {
-        do {
-            
-            let ecsda = try! MessageDigest("sha256WithRSAEncryption")
-            let digestContext =  try! MessageDigestContext(ecsda)
-            
-            try digestContext.update(data)
-            
-               return try digestContext.sign(privateKeyURL: privateKeyPath)
-           
-            
-        } catch {
-            if let messageError = error as? MessageDigestContextError {
-                switch messageError {
-                case .privateKeyNotFound:
-                    fatalError("Private Key at \(privateKeyPath) not found")
-                default:
-                    fatalError("Error occured while signing \(error)")
-                }
-            } else {
-                CloudKit.debugPrint(error)
-                return nil
-            }
-        }
+        let keyData = try! Data(contentsOf: URL(fileURLWithPath: privateKeyPath))
+        
+        let privateKey = try! CryptorRSA.createPrivateKey(with: keyData)
+        
+        let plaintextData = CryptorRSA.createPlaintext(with: data.bridge())
+        
+        let signedData = try! plaintextData.signed(with: privateKey, algorithm: Data.Algorithm.sha256)
+        
+        return signedData?.data as NSData?
+        
+//        do {
+//
+//            let ecsda = try! MessageDigest("sha256WithRSAEncryption")
+//            let digestContext =  try! MessageDigestContext(ecsda)
+//
+//            try digestContext.update(data)
+//
+//               return try digestContext.sign(privateKeyURL: privateKeyPath)
+//
+//
+//        } catch {
+//            if let messageError = error as? MessageDigestContextError {
+//                switch messageError {
+//                case .privateKeyNotFound:
+//                    fatalError("Private Key at \(privateKeyPath) not found")
+//                default:
+//                    fatalError("Error occured while signing \(error)")
+//                }
+//            } else {
+//                CloudKit.debugPrint(error)
+//                return nil
+//            }
+//        }
     }
     
     static func rawPayload(withRequestDate requestDate: String, requestBody: NSData, urlSubpath: String) -> String {
