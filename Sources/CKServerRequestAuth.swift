@@ -112,7 +112,7 @@ struct CKServerRequestAuth {
         
         updatedRequest.httpBody = requestBody
         
-        return request
+        return updatedRequest
     }
 }
 
