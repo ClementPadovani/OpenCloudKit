@@ -110,7 +110,7 @@ struct CKServerRequestAuth {
         updatedRequest.setValue(auth.requestDate, forHTTPHeaderField: CKRequestDateHeaderKey)
         updatedRequest.setValue(auth.signature, forHTTPHeaderField: CKRequestSignatureHeaderKey)
         
-        updatedRequest.httpBody = request.httpBody
+        updatedRequest.httpBody = requestBody
         
         return request
     }
