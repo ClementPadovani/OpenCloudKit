@@ -50,12 +50,12 @@ struct CKServerRequestAuth {
     static func sign(data: NSData, privateKeyPath: String) -> NSData? {
         do {
 
-            let ecsda = try! MessageDigest("sha256WithRSAEncryption")
+            let ecsda = try! MessageDigest("RSA-SHA256")
             let digestContext =  try! MessageDigestContext(ecsda)
 
             try digestContext.update(data)
-
-               return try digestContext.sign(privateKeyURL: privateKeyPath)
+            
+            return try digestContext.sign(privateKeyURL: privateKeyPath)
 
 
         } catch {
