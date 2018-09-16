@@ -99,17 +99,20 @@ struct CKServerRequestAuth {
     }
     
     static func authenticateServer(forRequest request: URLRequest, serverKeyID: String, privateKeyPath: String) -> URLRequest? {
-        var request = request
+        var updatedRequest = request
         guard let requestBody = request.httpBody, let path = request.url?.path, let auth = CKServerRequestAuth(requestBody: NSData(data: requestBody), urlPath: path, privateKeyPath: privateKeyPath) else {
             return nil
         }
         
         print("headers: \(CKRequestKeyIDHeaderKey) = \(serverKeyID) \(CKRequestDateHeaderKey) = \(auth.requestDate) \(CKRequestSignatureHeaderKey) = \(auth.signature)")
 
-        request.setValue(serverKeyID, forHTTPHeaderField: CKRequestKeyIDHeaderKey)
-        request.setValue(auth.requestDate, forHTTPHeaderField: CKRequestDateHeaderKey)
-        request.setValue(auth.signature, forHTTPHeaderField: CKRequestSignatureHeaderKey)
+        updatedRequest.setValue(serverKeyID, forHTTPHeaderField: CKRequestKeyIDHeaderKey)
+        updatedRequest.setValue(auth.requestDate, forHTTPHeaderField: CKRequestDateHeaderKey)
+        updatedRequest.setValue(auth.signature, forHTTPHeaderField: CKRequestSignatureHeaderKey)
         
+        guard let _ = updatedRequest.httpBody else {
+            fatalError("we have a nil body")
+        }
         
         return request
     }
