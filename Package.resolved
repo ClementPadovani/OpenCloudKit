@@ -2,21 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "CryptorRSA",
-        "repositoryURL": "https://github.com/IBM-Swift/BlueRSA.git",
+        "package": "CLibreSSL",
+        "repositoryURL": "https://github.com/vapor/clibressl.git",
         "state": {
           "branch": null,
-          "revision": "f465308aa6a095346b17f9f6ac46142ce8a14459",
-          "version": "1.0.5"
-        }
-      },
-      {
-        "package": "CommonCrypto",
-        "repositoryURL": "https://github.com/IBM-Swift/CommonCrypto.git",
-        "state": {
-          "branch": null,
-          "revision": "9156d238dbc4c15455b77b45e721b2bb0b995e31",
-          "version": "1.0.0"
+          "revision": "9ebe7fffd3f7d3cd3377696aeaa867a77f2418dd",
+          "version": "1.0.1"
         }
       },
       {

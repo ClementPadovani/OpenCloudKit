@@ -3,7 +3,7 @@ import PackageDescription
 let package = Package(
     name: "OpenCloudKit",
     dependencies: [
-      .Package(url: "https://github.com/IBM-Swift/BlueRSA.git", majorVersion: 1),
+      .Package(url: "https://github.com/vapor/clibressl.git", majorVersion: 1),
         .Package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", majorVersion: 0),
         .Package(url:  "https://github.com/DanToml/Jay.git", majorVersion: 1)
         ]
