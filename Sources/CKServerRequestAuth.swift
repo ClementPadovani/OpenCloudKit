@@ -110,9 +110,7 @@ struct CKServerRequestAuth {
         updatedRequest.setValue(auth.requestDate, forHTTPHeaderField: CKRequestDateHeaderKey)
         updatedRequest.setValue(auth.signature, forHTTPHeaderField: CKRequestSignatureHeaderKey)
         
-        guard let _ = updatedRequest.httpBody else {
-            fatalError("we have a nil body")
-        }
+        updatedRequest.httpBody = request.httpBody
         
         return request
     }
